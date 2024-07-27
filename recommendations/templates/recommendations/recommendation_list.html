@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations - SoulStrum</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.jpg' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top me-2">
+                SoulStrum
+            </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'track_list' %}">Tracks</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'artist_list' %}">Artists</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'album_list' %}">Albums</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'playlist_list' %}">Playlists</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'recommendation_list' %}">Recommendations</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container my-5">
+      <h1>Recommendations</h1>
+      <h2>Tracks</h2>
+      <div class="row">
+          {% for recommendation in recommendations %}
+          <div class="col-md-4 mb-4">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ recommendation.track.title }}</h5>
+                      <p class="card-text">Album: {{ recommendation.track.album.title }}</p>
+                      <p class="card-text">Artist: {{ recommendation.album.artist.name }}</p>
+                      <a href="{% url 'track_detail' recommendation.track.id %}" class="btn btn-primary">View Details</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+
+      <h2>Albums</h2>
+      <div class="row">
+          {% for recommendation in recommendations %}
+          <div class="col-md-4 mb-4">
+              <div class="card">
+                <img src="{{ recommendation.album.cover_image.url }}" class="card-img-top" alt="{{ recommendation.album.title }}">
+                <div class="card-body">
+                      <h5 class="card-title">{{ recommendation.album.title }}</h5>
+                      <p class="card-text">Artist: {{ recommendation.album.artist.name }}</p>
+                      <a href="{% url 'album_detail' recommendation.album.id %}" class="btn btn-primary">View Details</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+
+      <h2>Artist</h2>
+        <div class="row">
+            {% for recommendation in recommendations %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                  <img src="{{ recommendation.artist.image.url }}" class="card-img-top" alt="{{ recommendation.artist.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recommendation.artist.name }}</h5>
+                        <p class="card-text">{{ recommendation.artist.bio | truncatechars:100  }}</p>
+                        <a href="{% url 'artist_detail' recommendation.artist.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+  </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <span class="text-muted">© 2024 SoulStrum</span>
+      </div>
+    </footer>
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+  </body>
+  </html>
+  

@@ -1,0 +1,23 @@
+<!-- social_features/templates/social_features/like_button.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Features</title>
+</head>
+<body>
+    {% load static %}
+
+<form method="post" action="{% url 'like_track' track_id=track.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">
+        {% if request.user in track.liked_by.all %}
+            Unlike
+        {% else %}
+            Like
+        {% endif %}
+    </button>
+</form>
+</body>
+</html>
